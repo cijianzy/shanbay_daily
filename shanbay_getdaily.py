@@ -24,7 +24,7 @@ b_cookie = browsercookie.chrome()
 # 获取配置中的用户名和每日单词的页面数
 config = json.load(open('configuration.json'))
 user_id = config['user_id']
-page_num_limit = config['daily_page_num']
+page_num_limit = config['daily_page_num'] + 1
 
 if not os.path.exists('data'):
     os.makedirs('data')
@@ -35,7 +35,7 @@ os.makedirs('data/mp3')
 
 file = open('data/daily.json','w')
 
-for page_num in range(1, page_num_limit):
+for page_num in range(1, page_num_limit + 1):
     time.sleep(5)
     r = requests.get('https://www.shanbay.com/api/v1/bdc/library/today/?page=' + str(page_num) + '&_=' + user_id, cookies=b_cookie)
     content = r.content
