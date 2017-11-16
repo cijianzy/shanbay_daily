@@ -52,10 +52,15 @@ for page_num in range(1, page_num_limit):
         word_json['defn'] = word['cn_definition']['defn']
         word_json['us_audio'] = word['us_audio']
 
-        mp3file = urllib2.urlopen(word_json['us_audio'])
-        mp3file_save_path = 'data/mp3/'+ word_json['us_audio'].split('/')[-1]
-        with open(mp3file_save_path, 'wb') as output:
-            output.write(mp3file.read())
+        try:
+            mp3file = urllib2.urlopen(word_json['us_audio'])
+            mp3file_save_path = 'data/mp3/'+ word_json['us_audio'].split('/')[-1]
+            with open(mp3file_save_path, 'wb') as output:
+                output.write(mp3file.read())
+        except:
+            print('Error: ' + word_json['word'] + ' audio file download failure.' )
+            pass
+
         word_json['mp3'] = mp3file_save_path
 
         file.write(str(word_json) + '\n')
